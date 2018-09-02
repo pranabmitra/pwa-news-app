@@ -1,4 +1,4 @@
-const API_KEY = 'b9fe8b5378ae4198be8b3b68a68be3d2';
+const API_KEY = '**fe8b5378ae4198be8b3b68a68be3**';
 const contentWrapper = document.querySelector('main');
 const sourceElement = document.querySelector('#sourceSelector');
 const defaultSource = 'the-washington-post';
@@ -14,8 +14,8 @@ window.addEventListener('load', async e => {
 
     if ('serviceWorker' in navigator) {
         try {
-            // navigator.serviceWorker.register('sw.js');
-            navigator.serviceWorker.register('sw-new.js'); // using google's workbox
+            navigator.serviceWorker.register('sw.js');
+            // navigator.serviceWorker.register('sw-new.js'); // using google's workbox
             console.log(`Service worker registered!`);
         } catch (error) {
             console.log(`Service worker registration failed!`);
