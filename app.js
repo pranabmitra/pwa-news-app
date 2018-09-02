@@ -14,7 +14,8 @@ window.addEventListener('load', async e => {
 
     if ('serviceWorker' in navigator) {
         try {
-            navigator.serviceWorker.register('sw.js');
+            // navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw-new.js'); // using google's workbox
             console.log(`Service worker registered!`);
         } catch (error) {
             console.log(`Service worker registration failed!`);
