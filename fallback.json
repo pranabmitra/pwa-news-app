@@ -1,0 +1,10 @@
+{
+    "articles": [
+        {
+            "title": "Fails to fetch articles, reload page",
+            "url": "",
+            "urlToImage": "images/error_pages_offline.jpg",
+            "description": "Try loading the page when you are online."
+        }
+    ]
+}

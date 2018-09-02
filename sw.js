@@ -1,7 +1,9 @@
 const staticAssets = [
     './',
     './style.css',
-    './app.js'
+    './app.js',
+    './fallback.json',
+    './images/error_pages_offline.jpg'
 ];
 
 self.addEventListener('install', async event => {
@@ -11,7 +13,7 @@ self.addEventListener('install', async event => {
 
 self.addEventListener('fetch', event => {
     const req = event.request;
-    const url = new URL(req);
+    const url = new URL(req.url);
 
     if (url.origin === location.origin) { 
         // site's static assets
@@ -37,6 +39,8 @@ async function networkFirst(req) {
 
         return res;
     } catch (error) {
-        return await cache.match(req);   
+        const cachedResponse = await cache.match(req);
+        
+        return cachedResponse || await caches.match('./fallback.json');
     }
 }
