@@ -9,15 +9,36 @@ const staticAssets = [
     './images/error_pages_offline.jpg'
 ];
 
-workbox.precaching.precache(staticAssets);
-workbox.routing.registerRoute('https://newsapi.org/(.*)', workbox.strategies.networkFirst());
-workbox.routing.registerRoute(/.*\.(png|jpg|jpeg|gif)/, workbox.strategies.cacheFirst({
-    cacheName: 'image-cache',
+workbox.precaching.precacheAndRoute(staticAssets);
+
+workbox.routing.registerRoute(/.*\.(png|jpg|jpeg|gif)/,
+    workbox.strategies.cacheFirst({
+        cacheName: 'images-cache',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+            })
+        ]
+    })
+);
+
+const articleHandler = workbox.strategies.networkFirst({
+    cacheName: 'news-articles-cache',
     plugins: [
-      new workbox.expiration.Plugin({
-        maxEntries: 20,
-        maxAgeSeconds: 24 * 60 * 60,
-      }),
-    ],
-  }));
+        new workbox.expiration.Plugin({
+            maxEntries: 50,
+        })
+    ]
+});
+
+workbox.routing.registerRoute(/^https:\/\/newsapi.org\/(.*)/, args => {
+    return articleHandler.handle(args).then(response => {
+        if (!response) {
+            return caches.match('./fallback.json');
+        }
+
+        return response;
+    });
+});
 

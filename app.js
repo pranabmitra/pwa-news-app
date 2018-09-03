@@ -14,8 +14,8 @@ window.addEventListener('load', async e => {
 
     if ('serviceWorker' in navigator) {
         try {
-            navigator.serviceWorker.register('sw.js');
-            // navigator.serviceWorker.register('sw-new.js'); // using google's workbox
+            // navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw-new.js'); // using google's workbox
             console.log(`Service worker registered!`);
         } catch (error) {
             console.log(`Service worker registration failed!`);
@@ -36,7 +36,7 @@ async function updateNews(source = defaultSource) {
     const res = await fetch(`https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${API_KEY}`);
     const json = await res.json();
 
-    contentWrapper.innerHTML = json.articles.map(crateArticle).join('\n'); 
+    contentWrapper.innerHTML = json.articles.map(crateArticle).join('\n');
 }
 
 function crateArticle(article) {
